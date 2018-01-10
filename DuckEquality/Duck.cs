@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
+using System.Threading;
 
 namespace DuckEquality
 {
@@ -13,6 +15,9 @@ namespace DuckEquality
         public int WeightInGrams { get; }
         public int AgeInMonths { get; }
         public static Comparer<Duck> NameComparer { get; } = new NameRelationalComparer();
+        public static Comparer<Duck> WeightComparer { get; } = new WeightRelationalComparer();
+
+        CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
 
         public Duck(string name, string type, int weightInGrams, int ageInMonths)
         {
@@ -56,7 +61,7 @@ namespace DuckEquality
         }
         public override string ToString()
         {
-            return $"{Name}, Breed {Type}, Age {AgeInMonths}, weight {WeightInGrams}";
+            return $"{Name}, Breed {Type}, Months {AgeInMonths}, weight {WeightInGrams.ToString("D", currentCulture )}";
         }
 
         private sealed class NameRelationalComparer : Comparer<Duck>
@@ -69,6 +74,15 @@ namespace DuckEquality
                 return x.Name.CompareTo(y.Name);
             }
         }
+        private sealed class WeightRelationalComparer : Comparer<Duck>
+        {
+            public override int Compare(Duck x, Duck y)
+            {
+                if (ReferenceEquals(x, y)) return 0;
+                if (ReferenceEquals(null, y)) return 1;
+                if (ReferenceEquals(null, x)) return -1;
+                return x.WeightInGrams.CompareTo(y.WeightInGrams);
+            }
+        }
     }
-
 }

@@ -15,7 +15,7 @@ namespace DuckEquality
             var quackChinese = new Duck("Crispy", "Mandarin", 150, 10);
             var quackFunny = new Duck("Monty", "Swedish Blue", 140, 14);
             var quackSame = new Duck("Sir Quackalot", "Mallard", 100, 17);
-            var quackSimilar = new Duck("Sir Quickalot", "Mallard", 100, 17);
+            var quackSimilar = new Duck("Sir Quickalot", "Mallard", 120, 17);
 
             Dictionary<Duck, int> DuckDict = new Dictionary<Duck, int>();
             List <Duck> DuckList = new List<Duck>();
@@ -34,11 +34,12 @@ namespace DuckEquality
             DuckList.Add(quackSame);
             DuckList.Add(quackSimilar);
 
-            if (DuckDict.ContainsKey(quackFunny)) { Console.WriteLine("It's here"); }
+            if (DuckDict.ContainsKey(quackFunny)) { Console.WriteLine("QuackFunny is in the Dictionary"); }
 
             if (quack.Equals(quackSame)) { Console.WriteLine("Quack and QuackSame are equal"); }
             if (quack == quackSame) { Console.WriteLine("Quack and QuackSame are =="); }
-            if (quack.Equals(quackSimilar)) { Console.WriteLine("These two ducks are equal"); }
+            if (quack.Equals(quackSimilar)) { Console.WriteLine("Quack and QuackSimilar are equal"); }
+            if (quack != quackSimilar) { Console.WriteLine("Quack and QuackSimilar are !="); }
 
             foreach (KeyValuePair<Duck, int> duck in DuckDict)
             {
@@ -46,10 +47,15 @@ namespace DuckEquality
             }
 
             DuckList.Sort(Duck.NameComparer);
-
             foreach (var duck in DuckList)
             {
                 Console.WriteLine("Name {0}, Type {1}", duck.Name, duck.Type);
+            }
+
+            DuckList.Sort(Duck.WeightComparer);
+            foreach (var duck in DuckList)
+            {
+                Console.WriteLine("Weight {0}, Name {1}", duck.WeightInGrams, duck.Name);
             }
 
             Console.ReadLine();

@@ -48,14 +48,15 @@ namespace DuckEquality
 
         public override int GetHashCode()
         {
-            int hash = Name.GetHashCode();
+            int hash = 17;
+            hash = (hash * 23) + Name.GetHashCode();
             hash = (hash * 23) + Type.GetHashCode();
             hash = (hash * 23) + WeightInGrams.GetHashCode();
             return hash;
         }
         public override string ToString()
         {
-            return $"{Name}, Breed {Type}, Age {AgeInMonths} weight {WeightInGrams} grams";
+            return $"{Name}, Breed {Type}, Age {AgeInMonths}, weight {WeightInGrams}";
         }
 
         private sealed class NameRelationalComparer : Comparer<Duck>
